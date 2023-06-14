@@ -14,6 +14,10 @@ namespace Magazin_UI.Forms
 {
     public partial class FormEditareClient : Form
     {
+        private const string folderPathClienti = "../../../";
+        private const string fileNameClienti = "Clienti.txt";
+        private string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
+
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -65,10 +69,6 @@ namespace Magazin_UI.Forms
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            string folderPathClienti = "../../../";
-            string fileNameClienti = "Clienti.txt";
-            string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
             string[] lines = File.ReadAllLines(filePathClientiTxt);
             foreach (string line in lines)
             {
@@ -167,10 +167,6 @@ namespace Magazin_UI.Forms
 
         private void BtnSaveNume_Click(object sender, EventArgs e)
         {
-            string folderPathClienti = "../../../";
-            string fileNameClienti = "Clienti.txt";
-            string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
             string[] lines = File.ReadAllLines(filePathClientiTxt);
             for (int i = 0; i < lines.Length; i++)
             {
@@ -185,7 +181,6 @@ namespace Magazin_UI.Forms
                     {
                         LblNume.ForeColor = Color.Red;
                         LblClient.ForeColor = Color.Red;
-                        LblText.Text = "Introduceți datele corecte ale clientului.";
                         return;
                     }
 
@@ -203,10 +198,7 @@ namespace Magazin_UI.Forms
             TxtNume.ReadOnly = true;
 
             if (string.IsNullOrWhiteSpace(TxtNume.Text) || string.IsNullOrWhiteSpace(TxtPrenume.Text) || string.IsNullOrWhiteSpace(TxtSuma.Text))
-            {
                 LblClient.ForeColor = Color.Red;
-                LblText.Text = "Introduceți datele corecte ale clientului.";
-            }
 
             BtnEditNume.Visible = true;
             BtnEditSuma.Visible = true;
@@ -217,11 +209,8 @@ namespace Magazin_UI.Forms
 
         private void BtnSavePrenume_Click(object sender, EventArgs e)
         {
-            string folderPathClienti = "../../../";
-            string fileNameClienti = "Clienti.txt";
-            string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
             string[] lines = File.ReadAllLines(filePathClientiTxt);
+
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -235,7 +224,6 @@ namespace Magazin_UI.Forms
                     {
                         LblPrenume.ForeColor = Color.Red;
                         LblClient.ForeColor = Color.Red;
-                        LblText.Text = "Introduceți datele corecte ale clientului.";
                         return;
                     }
 
@@ -255,7 +243,6 @@ namespace Magazin_UI.Forms
             if (string.IsNullOrWhiteSpace(TxtNume.Text) || string.IsNullOrWhiteSpace(TxtPrenume.Text) || string.IsNullOrWhiteSpace(TxtSuma.Text))
             {
                 LblClient.ForeColor = Color.Red;
-                LblText.Text = "Introduceți datele corecte ale clientului.";
             }
 
             BtnEditPrenume.Visible = true;
@@ -267,11 +254,8 @@ namespace Magazin_UI.Forms
 
         private void BtnSaveSuma_Click(object sender, EventArgs e)
         {
-            string folderPathClienti = "../../../";
-            string fileNameClienti = "Clienti.txt";
-            string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
             string[] lines = File.ReadAllLines(filePathClientiTxt);
+
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -281,11 +265,10 @@ namespace Magazin_UI.Forms
                 {
                     values[3] = TxtSuma.Text;
 
-                    if (string.IsNullOrWhiteSpace(values[3]))
+                    if (string.IsNullOrWhiteSpace(values[3]) || !double.TryParse(values[3], out double suma))
                     {
                         LblSuma.ForeColor = Color.Red;
                         LblClient.ForeColor = Color.Red;
-                        LblText.Text = "Introduceți datele corecte ale clientului.";
                         return;
                     }
 
@@ -303,10 +286,7 @@ namespace Magazin_UI.Forms
             TxtSuma.ReadOnly = true;
 
             if (string.IsNullOrWhiteSpace(TxtNume.Text) || string.IsNullOrWhiteSpace(TxtPrenume.Text) || string.IsNullOrWhiteSpace(TxtSuma.Text))
-            {
                 LblClient.ForeColor = Color.Red;
-                LblText.Text = "Introduceți datele corecte ale clientului.";
-            }
 
             BtnEditPrenume.Visible = true;
             BtnEditSuma.Visible = true;

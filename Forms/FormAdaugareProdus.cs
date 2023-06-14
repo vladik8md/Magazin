@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Magazin;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,37 @@ namespace Magazin_UI.Forms
 {
     public partial class FormAdaugareProdus : Form
     {
+        private const string folderPath = "../../../";
+        private const string fileNameCategorii = "Categorii.txt";
+        private const string fileNameProduse = "Produse.txt";
+
+        private string filePathCategoriiTxt;
+        private string filePathProduseTxt;
+
+        public enum FilePathOption
+        {
+            Categorii,
+            Produse
+        }
+
+        private string GetFilePath(FilePathOption option)
+        {
+            string fileName;
+            switch (option)
+            {
+                case FilePathOption.Categorii:
+                    fileName = fileNameCategorii;
+                    break;
+                case FilePathOption.Produse:
+                    fileName = fileNameProduse;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(option), option, "Aceasta cale nu exista.");
+            }
+
+            return Path.Combine(folderPath, fileName);
+        }
+
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -32,10 +64,6 @@ namespace Magazin_UI.Forms
 
         private int NextCod()
         {
-            string folderPathProduse = "../../../";
-            string fileNameProduse = "Produse.txt";
-            string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
             if (!File.Exists(filePathProduseTxt))
             {
                 using (File.Create(filePathProduseTxt)) { }
@@ -64,10 +92,6 @@ namespace Magazin_UI.Forms
 
         private bool CategorieExists(string categorie)
         {
-            string folderPathCategorii = "../../../";
-            string fileNameCategorii = "Categorii.txt";
-            string filePathCategoriiTxt = Path.Combine(folderPathCategorii, fileNameCategorii);
-
             if (File.Exists(filePathCategoriiTxt))
             {
                 string[] lines = File.ReadAllLines(filePathCategoriiTxt);
@@ -79,26 +103,23 @@ namespace Magazin_UI.Forms
                     }
                 }
             }
-
             return false;
         }
 
         public FormAdaugareProdus()
         {
+            filePathCategoriiTxt = GetFilePath(FilePathOption.Categorii);
+            filePathProduseTxt = GetFilePath(FilePathOption.Produse);
             InitializeComponent();
         }
 
         private void BtnAdauga_Click(object sender, EventArgs e)
         {
-            string folderPathProduse = "../../../";
-            string fileNameProduse = "Produse.txt";
-            string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
             string produsCategorie = CbCategorie.Text;
             string produsDenumire = TxtDenumire.Text;
             string produsPret = Convert.ToString(TxtPret.Text);
 
-            if (string.IsNullOrWhiteSpace(produsCategorie) && string.IsNullOrWhiteSpace(produsDenumire) && string.IsNullOrWhiteSpace(produsPret))
+            if (string.IsNullOrWhiteSpace(produsCategorie) && string.IsNullOrWhiteSpace(produsDenumire) && (string.IsNullOrWhiteSpace(produsPret) || !double.TryParse(produsPret, out double pret)))
             {
                 LblProdus.ForeColor = Color.Red;
                 LblCategorie.ForeColor = Color.Red;
@@ -106,7 +127,7 @@ namespace Magazin_UI.Forms
                 LblPret.ForeColor = Color.Red;
                 return;
             }
-            else if (!string.IsNullOrWhiteSpace(produsCategorie) && string.IsNullOrWhiteSpace(produsDenumire) && string.IsNullOrWhiteSpace(produsPret))
+            else if (!string.IsNullOrWhiteSpace(produsCategorie) && string.IsNullOrWhiteSpace(produsDenumire) && (string.IsNullOrWhiteSpace(produsPret) || !double.TryParse(produsPret, out pret)))
             {
                 LblProdus.ForeColor = Color.Red;
                 LblCategorie.ForeColor = Color.Black;
@@ -114,7 +135,7 @@ namespace Magazin_UI.Forms
                 LblPret.ForeColor = Color.Red;
                 return;
             }
-            else if (!string.IsNullOrWhiteSpace(produsCategorie) && !string.IsNullOrWhiteSpace(produsDenumire) && string.IsNullOrWhiteSpace(produsPret))
+            else if (!string.IsNullOrWhiteSpace(produsCategorie) && !string.IsNullOrWhiteSpace(produsDenumire) && (string.IsNullOrWhiteSpace(produsPret) || !double.TryParse(produsPret, out pret)))
             {
                 LblProdus.ForeColor = Color.Red;
                 LblCategorie.ForeColor = Color.Black;
@@ -122,7 +143,7 @@ namespace Magazin_UI.Forms
                 LblPret.ForeColor = Color.Red;
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(produsCategorie) && !string.IsNullOrWhiteSpace(produsDenumire) && !string.IsNullOrWhiteSpace(produsPret))
+            else if (string.IsNullOrWhiteSpace(produsCategorie) && !string.IsNullOrWhiteSpace(produsDenumire) && (!string.IsNullOrWhiteSpace(produsPret) || !double.TryParse(produsPret, out pret)))
             {
                 LblProdus.ForeColor = Color.Red;
                 LblCategorie.ForeColor = Color.Red;
@@ -130,7 +151,7 @@ namespace Magazin_UI.Forms
                 LblPret.ForeColor = Color.Black;
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(produsCategorie) && !string.IsNullOrWhiteSpace(produsDenumire) && string.IsNullOrWhiteSpace(produsPret))
+            else if (string.IsNullOrWhiteSpace(produsCategorie) && !string.IsNullOrWhiteSpace(produsDenumire) && (string.IsNullOrWhiteSpace(produsPret) || !double.TryParse(produsPret, out pret)))
             {
                 LblProdus.ForeColor = Color.Red;
                 LblCategorie.ForeColor = Color.Red;
@@ -138,7 +159,7 @@ namespace Magazin_UI.Forms
                 LblPret.ForeColor = Color.Red;
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(produsCategorie) && string.IsNullOrWhiteSpace(produsDenumire) && !string.IsNullOrWhiteSpace(produsPret))
+            else if (string.IsNullOrWhiteSpace(produsCategorie) && string.IsNullOrWhiteSpace(produsDenumire) && (!string.IsNullOrWhiteSpace(produsPret) || !double.TryParse(produsPret, out pret)))
             {
                 LblProdus.ForeColor = Color.Red;
                 LblCategorie.ForeColor = Color.Red;
@@ -146,7 +167,7 @@ namespace Magazin_UI.Forms
                 LblPret.ForeColor = Color.Black;
                 return;
             }
-            else if (!string.IsNullOrWhiteSpace(produsCategorie) && string.IsNullOrWhiteSpace(produsDenumire) && !string.IsNullOrWhiteSpace(produsPret))
+            else if (!string.IsNullOrWhiteSpace(produsCategorie) && string.IsNullOrWhiteSpace(produsDenumire) && (!string.IsNullOrWhiteSpace(produsPret) || !double.TryParse(produsPret, out pret)))
             {
                 LblProdus.ForeColor = Color.Red;
                 LblCategorie.ForeColor = Color.Black;
@@ -164,11 +185,11 @@ namespace Magazin_UI.Forms
 
             int produsCod = NextCod();
 
-            string valuesProduse = $"{produsCod},{produsCategorie},{produsDenumire},{produsPret}";
+            Produs produs = new Produs(produsCod, produsCategorie, produsDenumire, double.Parse(TxtPret.Text));
 
             using (StreamWriter writer = File.AppendText(filePathProduseTxt))
             {
-                writer.WriteLine(valuesProduse);
+                writer.WriteLine(produs);
             }
 
             if (!string.IsNullOrEmpty(CbCategorie.Text) && !CategorieExists(produsCategorie))
@@ -233,19 +254,11 @@ namespace Magazin_UI.Forms
 
         private void SaveCategorie()
         {
-            string folderPathCategorii = "../../../";
-            string fileNameCategorii = "Categorii.txt";
-            string filePathCategoriiTxt = Path.Combine(folderPathCategorii, fileNameCategorii);
-
             File.WriteAllLines(filePathCategoriiTxt, CbCategorie.Items.OfType<string>());
         }
 
         private void LoadCategorii()
         {
-            string folderPathCategorii = "../../../";
-            string fileNameCategorii = "Categorii.txt";
-            string filePathCategoriiTxt = Path.Combine(folderPathCategorii, fileNameCategorii);
-
             if (File.Exists(filePathCategoriiTxt))
             {
                 string[] categorii = File.ReadAllLines(filePathCategoriiTxt);

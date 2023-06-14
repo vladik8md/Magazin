@@ -14,6 +14,10 @@ namespace Magazin_UI.Forms
 {
     public partial class FormStergereClient : Form
     {
+        private const string folderPathClienti = "../../../";
+        private const string fileNameClienti = "Clienti.txt";
+        private string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
+
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -106,10 +110,6 @@ namespace Magazin_UI.Forms
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            string folderPathClienti = "../../../";
-            string fileNameClienti = "Clienti.txt";
-            string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
             string[] lines = File.ReadAllLines(filePathClientiTxt);
             foreach (string line in lines)
             {
@@ -165,10 +165,6 @@ namespace Magazin_UI.Forms
 
         private void BtnSterge_Click(object sender, EventArgs e)
         {
-            string folderPathClienti = "../../../";
-            string fileNameClienti = "Clienti.txt";
-            string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
             string[] lines = File.ReadAllLines(filePathClientiTxt);
 
             List<string> deleteLines = new List<string>();
@@ -210,10 +206,6 @@ namespace Magazin_UI.Forms
 
         private void BtnDa_Click(object sender, EventArgs e)
         {
-            string folderPathClienti = "../../../";
-            string fileNameClienti = "Clienti.txt";
-            string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
             string[] lines = File.ReadAllLines(filePathClientiTxt);
 
             List<string> deleteLines = new List<string>();

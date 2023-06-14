@@ -315,7 +315,7 @@
             this.BtnNu.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnNu.Location = new System.Drawing.Point(245, 490);
             this.BtnNu.Name = "BtnNu";
-            this.BtnNu.Size = new System.Drawing.Size(110, 30);
+            this.BtnNu.Size = new System.Drawing.Size(134, 30);
             this.BtnNu.TabIndex = 114;
             this.BtnNu.TabStop = false;
             this.BtnNu.Text = "NU";
@@ -330,9 +330,9 @@
             this.BtnDa.FlatAppearance.MouseOverBackColor = System.Drawing.Color.PeachPuff;
             this.BtnDa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDa.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnDa.Location = new System.Drawing.Point(361, 490);
+            this.BtnDa.Location = new System.Drawing.Point(385, 490);
             this.BtnDa.Name = "BtnDa";
-            this.BtnDa.Size = new System.Drawing.Size(78, 30);
+            this.BtnDa.Size = new System.Drawing.Size(54, 30);
             this.BtnDa.TabIndex = 115;
             this.BtnDa.TabStop = false;
             this.BtnDa.Text = "DA";

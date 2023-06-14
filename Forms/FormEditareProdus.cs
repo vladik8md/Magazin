@@ -14,6 +14,37 @@ namespace Magazin_UI.Forms
 {
     public partial class FormEditareProdus : Form
     {
+        private const string folderPath = "../../../";
+        private const string fileNameCategorii = "Categorii.txt";
+        private const string fileNameProduse = "Produse.txt";
+
+        private string filePathCategoriiTxt;
+        private string filePathProduseTxt;
+
+        public enum FilePathOption
+        {
+            Categorii,
+            Produse
+        }
+
+        private string GetFilePath(FilePathOption option)
+        {
+            string fileName;
+            switch (option)
+            {
+                case FilePathOption.Categorii:
+                    fileName = fileNameCategorii;
+                    break;
+                case FilePathOption.Produse:
+                    fileName = fileNameProduse;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(option), option, "Aceasta cale nu exista.");
+            }
+
+            return Path.Combine(folderPath, fileName);
+        }
+
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -30,6 +61,8 @@ namespace Magazin_UI.Forms
 
         public FormEditareProdus()
         {
+            filePathCategoriiTxt = GetFilePath(FilePathOption.Categorii);
+            filePathProduseTxt = GetFilePath(FilePathOption.Produse);
             InitializeComponent();
         }
 
@@ -65,11 +98,8 @@ namespace Magazin_UI.Forms
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            string folderPathProduse = "../../../";
-            string fileNameProduse = "Produse.txt";
-            string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
             string[] lines = File.ReadAllLines(filePathProduseTxt);
+
             foreach (string line in lines)
             {
                 string[] values = line.Split(',');
@@ -168,15 +198,8 @@ namespace Magazin_UI.Forms
 
         private void BtnSaveCategorie_Click(object sender, EventArgs e)
         {
-            string folderPathProduse = "../../../";
-            string fileNameProduse = "Produse.txt";
-            string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
-            string folderPathCategorii = "../../../";
-            string fileNameCategorii = "Categorii.txt";
-            string filePathCategoriiTxt = Path.Combine(folderPathCategorii, fileNameCategorii);
-
             string[] lines = File.ReadAllLines(filePathProduseTxt);
+
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -190,7 +213,6 @@ namespace Magazin_UI.Forms
                     {
                         LblCategorie.ForeColor = Color.Red;
                         LblProdus.ForeColor = Color.Red;
-                        LblText.Text = "Introduceți datele corecte ale produsului.";
                         return;
                     }
 
@@ -221,10 +243,7 @@ namespace Magazin_UI.Forms
             TxtCategorie.ReadOnly = true;
 
             if (string.IsNullOrWhiteSpace(TxtCategorie.Text) || string.IsNullOrWhiteSpace(TxtDenumire.Text) || string.IsNullOrWhiteSpace(TxtPret.Text))
-            {
                 LblProdus.ForeColor = Color.Red;
-                LblText.Text = "Introduceți datele corecte ale produsului.";
-            }
 
             BtnEditCategorie.Visible = true;
             BtnEditPret.Visible = true;
@@ -236,11 +255,8 @@ namespace Magazin_UI.Forms
 
         private void BtnSaveDenumire_Click(object sender, EventArgs e)
         {
-            string folderPathProduse = "../../../";
-            string fileNameProduse = "Produse.txt";
-            string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
             string[] lines = File.ReadAllLines(filePathProduseTxt);
+
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -254,7 +270,6 @@ namespace Magazin_UI.Forms
                     {
                         LblDenumire.ForeColor = Color.Red;
                         LblProdus.ForeColor = Color.Red;
-                        LblText.Text = "Introduceți datele corecte ale produsului.";
                         return;
                     }
 
@@ -274,7 +289,6 @@ namespace Magazin_UI.Forms
             if (string.IsNullOrWhiteSpace(TxtCategorie.Text) || string.IsNullOrWhiteSpace(TxtDenumire.Text) || string.IsNullOrWhiteSpace(TxtPret.Text))
             {
                 LblProdus.ForeColor = Color.Red;
-                LblText.Text = "Introduceți datele corecte ale produsului.";
             }
 
             BtnEditDenumire.Visible = true;
@@ -286,11 +300,8 @@ namespace Magazin_UI.Forms
 
         private void BtnSavePret_Click(object sender, EventArgs e)
         {
-            string folderPathProduse = "../../../";
-            string fileNameProduse = "Produse.txt";
-            string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
             string[] lines = File.ReadAllLines(filePathProduseTxt);
+
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -300,11 +311,10 @@ namespace Magazin_UI.Forms
                 {
                     values[3] = TxtPret.Text;
 
-                    if (string.IsNullOrWhiteSpace(values[3]))
+                    if (string.IsNullOrWhiteSpace(values[3]) || !double.TryParse(values[3], out double pret))
                     {
                         LblPret.ForeColor = Color.Red;
                         LblProdus.ForeColor = Color.Red;
-                        LblText.Text = "Introduceți datele corecte ale produsului.";
                         return;
                     }
 
@@ -322,10 +332,7 @@ namespace Magazin_UI.Forms
             TxtPret.ReadOnly = true;
 
             if (string.IsNullOrWhiteSpace(TxtCategorie.Text) || string.IsNullOrWhiteSpace(TxtDenumire.Text) || string.IsNullOrWhiteSpace(TxtPret.Text))
-            {
                 LblProdus.ForeColor = Color.Red;
-                LblText.Text = "Introduceți datele corecte ale produsului.";
-            }
 
             BtnEditPret.Visible = true;
             BtnEditCategorie.Visible = true;

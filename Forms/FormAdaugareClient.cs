@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Magazin;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,10 @@ namespace Magazin_UI.Forms
 {
     public partial class FormAdaugareClient : Form
     {
+        private const string folderPathClienti = "../../../";
+        private const string fileNameClienti = "Clienti.txt";
+        private string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
+
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -70,16 +75,12 @@ namespace Magazin_UI.Forms
 
         private void BtnAdaugaClient_Click(object sender, EventArgs e)
         {
-            string folderPathClienti = "../../../";
-            string fileNameClienti = "Clienti.txt";
-            string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
             string clientCodPersonal = TxtCodPersonal.Text;
             string clientNume = TxtNume.Text;
             string clientPrenume = TxtPrenume.Text;
             string clientSuma = TxtSuma.Text;
 
-            if (string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && string.IsNullOrWhiteSpace(clientSuma))
+            if (string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && (string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out double suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Red;
@@ -88,7 +89,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Red;
                 return;
             }
-            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && string.IsNullOrWhiteSpace(clientSuma))
+            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && (string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Black;
@@ -97,7 +98,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Red;
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && string.IsNullOrWhiteSpace(clientSuma))
+            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && (string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Red;
@@ -106,7 +107,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Red;
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && !string.IsNullOrWhiteSpace(clientPrenume) && string.IsNullOrWhiteSpace(clientSuma))
+            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && !string.IsNullOrWhiteSpace(clientPrenume) && (string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Red;
@@ -115,7 +116,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Red;
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && !string.IsNullOrWhiteSpace(clientSuma))
+            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && (!string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Red;
@@ -124,7 +125,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Black;
                 return;
             }
-            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && string.IsNullOrWhiteSpace(clientSuma))
+            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && (string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Black;
@@ -133,7 +134,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Red;
                 return;
             }
-            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && !string.IsNullOrWhiteSpace(clientPrenume) && string.IsNullOrWhiteSpace(clientSuma))
+            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && !string.IsNullOrWhiteSpace(clientPrenume) && (string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Black;
@@ -142,7 +143,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Red;
                 return;
             }
-            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && !string.IsNullOrWhiteSpace(clientSuma))
+            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && (!string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Black;
@@ -151,7 +152,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Black;
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && !string.IsNullOrWhiteSpace(clientPrenume) && string.IsNullOrWhiteSpace(clientSuma))
+            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && !string.IsNullOrWhiteSpace(clientPrenume) && (string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Red;
@@ -160,7 +161,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Red;
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && !string.IsNullOrWhiteSpace(clientSuma))
+            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && (!string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Red;
@@ -178,7 +179,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Black;
                 return;
             }
-            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && !string.IsNullOrWhiteSpace(clientPrenume) && string.IsNullOrWhiteSpace(clientSuma))
+            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && !string.IsNullOrWhiteSpace(clientPrenume) && (string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Black;
@@ -187,7 +188,7 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Red;
                 return;
             }
-            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && !string.IsNullOrWhiteSpace(clientSuma))
+            else if (!string.IsNullOrWhiteSpace(clientCodPersonal) && !string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && (!string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Black;
@@ -224,11 +225,11 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Black;
             }
 
-            string valuesProduse = $"{clientCodPersonal},{clientNume},{clientPrenume},{clientSuma}";
+            Client client = new Client(clientCodPersonal, clientNume, clientPrenume, double.Parse(TxtSuma.Text));
 
             using (StreamWriter writer = File.AppendText(filePathClientiTxt))
             {
-                writer.WriteLine(valuesProduse);
+                writer.WriteLine(client);
             }
 
             LblText.Text = $"Produsul a fost salvat în 'Clienti.txt' cu codul personal '{clientCodPersonal}'";
@@ -237,10 +238,6 @@ namespace Magazin_UI.Forms
 
         private bool ClientExists(string clientCodPersonal)
         {
-            string folderPathClienti = "../../../";
-            string fileNameClienti = "Clienti.txt";
-            string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
             if (File.Exists(filePathClientiTxt))
             {
                 using (StreamReader reader = new StreamReader(filePathClientiTxt))

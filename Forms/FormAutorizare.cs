@@ -9,8 +9,8 @@ namespace Magazin_UI.Forms
     {
         private int loginAttempts = 0;
         private readonly TelegramBotClient botClient;
-        private readonly string botToken = "5900642493:AAGbGw9kHg_8XVO4ZThs01CWpXILM9rwpIs";
-        private readonly string chatId = "-1001760055401";
+        private const string botToken = "5900642493:AAGbGw9kHg_8XVO4ZThs01CWpXILM9rwpIs";
+        private const string chatId = "-1001760055401";
 
         public FormAutorizare()
         {

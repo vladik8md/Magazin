@@ -14,6 +14,10 @@ namespace Magazin_UI.Forms
 {
     public partial class FormStergereProdus : Form
     {
+        private const string folderPathProduse = "../../../";
+        private const string fileNameProduse = "Produse.txt";
+        private string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
+
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -56,11 +60,8 @@ namespace Magazin_UI.Forms
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            string folderPathProduse = "../../../";
-            string fileNameProduse = "Produse.txt";
-            string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
             string[] lines = File.ReadAllLines(filePathProduseTxt);
+
             foreach (string line in lines)
             {
                 string[] values = line.Split(',');
@@ -149,10 +150,6 @@ namespace Magazin_UI.Forms
 
         private void BtnSterge_Click(object sender, EventArgs e)
         {
-            string folderPathProduse = "../../../";
-            string fileNameProduse = "Produse.txt";
-            string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
             string[] lines = File.ReadAllLines(filePathProduseTxt);
 
             List<string> deleteLines = new List<string>();
@@ -216,10 +213,6 @@ namespace Magazin_UI.Forms
 
         private void BtnDa_Click(object sender, EventArgs e)
         {
-            string folderPathProduse = "../../../";
-            string fileNameProduse = "Produse.txt";
-            string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
             string[] lines = File.ReadAllLines(filePathProduseTxt);
 
             List<string> deleteLines = new List<string>();
