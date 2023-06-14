@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0FA8F62E-C6B7-4FEC-A5AA-A0E86729831F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Magazin</RootNamespace>
+    <AssemblyName>Magazin</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telegram.Bot, Version=19.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Telegram.Bot.19.0.0\lib\netstandard2.0\Telegram.Bot.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms\FormAdaugareClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAdaugareClient.designer.cs">
+      <DependentUpon>FormAdaugareClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAdaugareProdus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAdaugareProdus.designer.cs">
+      <DependentUpon>FormAdaugareProdus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAfisareClienti.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAfisareClienti.designer.cs">
+      <DependentUpon>FormAfisareClienti.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAfisareProduse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAfisareProduse.designer.cs">
+      <DependentUpon>FormAfisareProduse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAutorizare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAutorizare.designer.cs">
+      <DependentUpon>FormAutorizare.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCautareClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCautareClient.designer.cs">
+      <DependentUpon>FormCautareClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCautareProdus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCautareProdus.designer.cs">
+      <DependentUpon>FormCautareProdus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormClienti.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormClienti.designer.cs">
+      <DependentUpon>FormClienti.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormEditareClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormEditareClient.designer.cs">
+      <DependentUpon>FormEditareClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormEditareProdus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormEditareProdus.designer.cs">
+      <DependentUpon>FormEditareProdus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormMeniu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMeniu.designer.cs">
+      <DependentUpon>FormMeniu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormProduse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormProduse.designer.cs">
+      <DependentUpon>FormProduse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormStergereClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormStergereClient.designer.cs">
+      <DependentUpon>FormStergereClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormStergereProdus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormStergereProdus.designer.cs">
+      <DependentUpon>FormStergereProdus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\FormAdaugareClient.resx">
+      <DependentUpon>FormAdaugareClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAdaugareProdus.resx">
+      <DependentUpon>FormAdaugareProdus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAfisareClienti.resx">
+      <DependentUpon>FormAfisareClienti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAfisareProduse.resx">
+      <DependentUpon>FormAfisareProduse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAutorizare.resx">
+      <DependentUpon>FormAutorizare.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCautareClient.resx">
+      <DependentUpon>FormCautareClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCautareProdus.resx">
+      <DependentUpon>FormCautareProdus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormClienti.resx">
+      <DependentUpon>FormClienti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormEditareClient.resx">
+      <DependentUpon>FormEditareClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormEditareProdus.resx">
+      <DependentUpon>FormEditareProdus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormMeniu.resx">
+      <DependentUpon>FormMeniu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormProduse.resx">
+      <DependentUpon>FormProduse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormStergereClient.resx">
+      <DependentUpon>FormStergereClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormStergereProdus.resx">
+      <DependentUpon>FormStergereProdus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
