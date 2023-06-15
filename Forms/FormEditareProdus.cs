@@ -1,50 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using Magazin;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Magazin_UI.Forms
 {
     public partial class FormEditareProdus : Form
     {
-        private const string folderPath = "../../../";
-        private const string fileNameCategorii = "Categorii.txt";
-        private const string fileNameProduse = "Produse.txt";
-
-        private string filePathCategoriiTxt;
-        private string filePathProduseTxt;
-
-        public enum FilePathOption
-        {
-            Categorii,
-            Produse
-        }
-
-        private string GetFilePath(FilePathOption option)
-        {
-            string fileName;
-            switch (option)
-            {
-                case FilePathOption.Categorii:
-                    fileName = fileNameCategorii;
-                    break;
-                case FilePathOption.Produse:
-                    fileName = fileNameProduse;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(option), option, "Aceasta cale nu exista.");
-            }
-
-            return Path.Combine(folderPath, fileName);
-        }
-
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -59,10 +24,33 @@ namespace Magazin_UI.Forms
             childForm.Show();
         }
 
+        private void FormEditareProdus_Load(object sender, EventArgs e)
+        {
+            BtnEditCategorie.Visible = false;
+            BtnEditDenumire.Visible = false;
+            BtnEditPret.Visible = false;
+            BtnSaveCategorie.Visible = false;
+            BtnSaveDenumire.Visible = false;
+            BtnSavePret.Visible = false;
+            BtnClear.Visible = false;
+            BtnCalc.Visible = false;
+
+            foreach (Control control in Controls)
+            {
+                if (control is TextBox textBox)
+                {
+                    textBox.KeyDown += (s, ea) =>
+                    {
+                        if (ea.KeyCode != Keys.Enter) return;
+                        ea.SuppressKeyPress = true;
+                        SelectNextControl(ActiveControl, true, true, true, true);
+                    };
+                }
+            }
+        }
+
         public FormEditareProdus()
         {
-            filePathCategoriiTxt = GetFilePath(FilePathOption.Categorii);
-            filePathProduseTxt = GetFilePath(FilePathOption.Produse);
             InitializeComponent();
         }
 
@@ -98,7 +86,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathProduseTxt);
+            string[] lines = File.ReadAllLines(Produs.FilePathProduse);
 
             foreach (string line in lines)
             {
@@ -159,6 +147,9 @@ namespace Magazin_UI.Forms
             BtnCalc.Visible = false;
 
             BtnSearch.Visible = true;
+            TxtCategorie.ReadOnly = true;
+            TxtDenumire.ReadOnly = true;
+            TxtPret.ReadOnly = true;
 
             LblProdus.ForeColor = Color.Black;
             LblCod.ForeColor = Color.Black;
@@ -198,7 +189,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSaveCategorie_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathProduseTxt);
+            string[] lines = File.ReadAllLines(Produs.FilePathProduse);
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -225,15 +216,15 @@ namespace Magazin_UI.Forms
                 }
             }
 
-            File.WriteAllLines(filePathProduseTxt, lines);
+            File.WriteAllLines(Produs.FilePathProduse, lines);
 
-            string[] categorii = File.ReadAllLines(filePathCategoriiTxt);
+            string[] categorii = File.ReadAllLines(Produs.FilePathCategorii);
             string newCategorie = TxtCategorie.Text;
 
             bool categorieExists = categorii.Any(categorie => categorie.Trim() == newCategorie);
             if (!categorieExists)
             {
-                using (StreamWriter sw = File.AppendText(filePathCategoriiTxt))
+                using (StreamWriter sw = File.AppendText(Produs.FilePathCategorii))
                 {
                     sw.WriteLine(newCategorie);
                     LblText.Text = $"Categoria '{newCategorie}' a fost adăugată în fișierul 'Categorii.txt'.";
@@ -255,7 +246,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSaveDenumire_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathProduseTxt);
+            string[] lines = File.ReadAllLines(Produs.FilePathProduse);
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -282,7 +273,7 @@ namespace Magazin_UI.Forms
                 }
             }
 
-            File.WriteAllLines(filePathProduseTxt, lines);
+            File.WriteAllLines(Produs.FilePathProduse, lines);
 
             TxtDenumire.ReadOnly = true;
 
@@ -300,7 +291,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSavePret_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathProduseTxt);
+            string[] lines = File.ReadAllLines(Produs.FilePathProduse);
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -327,7 +318,7 @@ namespace Magazin_UI.Forms
                 }
             }
 
-            File.WriteAllLines(filePathProduseTxt, lines);
+            File.WriteAllLines(Produs.FilePathProduse, lines);
 
             TxtPret.ReadOnly = true;
 
@@ -347,31 +338,11 @@ namespace Magazin_UI.Forms
             LblText.Text = null;
         }
 
-        private void FormEditareProdus_Load(object sender, EventArgs e)
+        private void BtnCalc_Click(object sender, EventArgs e)
         {
-            BtnEditCategorie.Visible = false;
-            BtnEditDenumire.Visible = false;
-            BtnEditPret.Visible = false;
-            BtnSaveCategorie.Visible = false;
-            BtnSaveDenumire.Visible = false;
-            BtnSavePret.Visible = false;
-            BtnClear.Visible = false;
-            BtnCalc.Visible = false;
-
-            foreach (Control control in Controls)
-            {
-                if (control is TextBox textBox)
-                {
-                    textBox.KeyDown += (s, ea) =>
-                    {
-                        if (ea.KeyCode != Keys.Enter) return;
-                        ea.SuppressKeyPress = true;
-                        SelectNextControl(ActiveControl, true, true, true, true);
-                    };
-                }
-            }
+            Process.Start("calc.exe");
         }
-
+        
         private void TxtCod_TextChanged(object sender, EventArgs e)
         {
             TxtCategorie.Text = null;
@@ -379,6 +350,9 @@ namespace Magazin_UI.Forms
             TxtPret.Text = null;
 
             BtnSearch.Visible = true;
+            TxtCategorie.ReadOnly = true;
+            TxtDenumire.ReadOnly = true;
+            TxtPret.ReadOnly = true;
 
             BtnClear.Visible = false;
             BtnEditCategorie.Visible = false;
@@ -388,11 +362,6 @@ namespace Magazin_UI.Forms
             BtnEditDenumire.Visible = false;
             BtnSavePret.Visible = false;
             BtnCalc.Visible = false;
-        }
-
-        private void BtnCalc_Click(object sender, EventArgs e)
-        {
-            Process.Start("calc.exe");
         }
     }
 }

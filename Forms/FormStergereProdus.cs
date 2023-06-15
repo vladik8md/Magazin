@@ -1,23 +1,15 @@
 ﻿using System;
+using Magazin;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Magazin_UI.Forms
 {
     public partial class FormStergereProdus : Form
     {
-        private const string folderPathProduse = "../../../";
-        private const string fileNameProduse = "Produse.txt";
-        private string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -30,11 +22,6 @@ namespace Magazin_UI.Forms
             this.Controls.Add(childForm);
             childForm.BringToFront();
             childForm.Show();
-        }
-
-        public FormStergereProdus()
-        {
-            InitializeComponent();
         }
 
         private void FormStergeProdus_Load(object sender, EventArgs e)
@@ -58,9 +45,14 @@ namespace Magazin_UI.Forms
             }
         }
 
+        public FormStergereProdus()
+        {
+            InitializeComponent();
+        }
+
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathProduseTxt);
+            string[] lines = File.ReadAllLines(Produs.FilePathProduse);
 
             foreach (string line in lines)
             {
@@ -150,7 +142,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSterge_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathProduseTxt);
+            string[] lines = File.ReadAllLines(Produs.FilePathProduse);
 
             List<string> deleteLines = new List<string>();
 
@@ -213,7 +205,7 @@ namespace Magazin_UI.Forms
 
         private void BtnDa_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathProduseTxt);
+            string[] lines = File.ReadAllLines(Produs.FilePathProduse);
 
             List<string> deleteLines = new List<string>();
 
@@ -227,7 +219,7 @@ namespace Magazin_UI.Forms
                 deleteLines.Add(line);
             }
 
-            File.WriteAllLines(filePathProduseTxt, deleteLines);
+            File.WriteAllLines(Produs.FilePathProduse, deleteLines);
 
             LblText.Text = $"Produsul a fost șters din 'Produse.txt' cu codul '{TxtCod.Text}'";
 

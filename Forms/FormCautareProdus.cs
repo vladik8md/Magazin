@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using Magazin;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Magazin_UI.Forms
 {
     public partial class FormCautareProdus : Form
     {
-        private const string folderPathProduse = "../../../";
-        private const string fileNameProduse = "Produse.txt";
-        private string filePathProduseTxt = Path.Combine(folderPathProduse, fileNameProduse);
-
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -30,6 +21,11 @@ namespace Magazin_UI.Forms
             this.Controls.Add(childForm);
             childForm.BringToFront();
             childForm.Show();
+        }
+
+        private void FormCautareProdus_Load(object sender, EventArgs e)
+        {
+            BtnClear.Visible = false;
         }
 
         public FormCautareProdus()
@@ -69,7 +65,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathProduseTxt);
+            string[] lines = File.ReadAllLines(Produs.FilePathProduse);
             foreach (string line in lines)
             {
                 string[] values = line.Split(',');
@@ -134,11 +130,6 @@ namespace Magazin_UI.Forms
 
             BtnSearch.Visible = true;
 
-            BtnClear.Visible = false;
-        }
-
-        private void FormCautareProdus_Load(object sender, EventArgs e)
-        {
             BtnClear.Visible = false;
         }
     }

@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using Magazin;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Magazin_UI.Forms
 {
     public partial class FormEditareClient : Form
-    {
-        private const string folderPathClienti = "../../../";
-        private const string fileNameClienti = "Clienti.txt";
-        private string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
+    { 
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -30,6 +21,31 @@ namespace Magazin_UI.Forms
             this.Controls.Add(childForm);
             childForm.BringToFront();
             childForm.Show();
+        }
+
+        private void FormEditareClient_Load(object sender, EventArgs e)
+        {
+            BtnEditNume.Visible = false;
+            BtnEditPrenume.Visible = false;
+            BtnEditSuma.Visible = false;
+            BtnSaveNume.Visible = false;
+            BtnSavePrenume.Visible = false;
+            BtnSaveSuma.Visible = false;
+            BtnClear.Visible = false;
+            BtnCalc.Visible = false;
+
+            foreach (Control control in Controls)
+            {
+                if (control is TextBox textBox)
+                {
+                    textBox.KeyDown += (s, ea) =>
+                    {
+                        if (ea.KeyCode != Keys.Enter) return;
+                        ea.SuppressKeyPress = true;
+                        SelectNextControl(ActiveControl, true, true, true, true);
+                    };
+                }
+            }
         }
 
         public FormEditareClient()
@@ -69,7 +85,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathClientiTxt);
+            string[] lines = File.ReadAllLines(Client.FilePath);
             foreach (string line in lines)
             {
                 string[] values = line.Split(',');
@@ -128,6 +144,9 @@ namespace Magazin_UI.Forms
             BtnCalc.Visible = false;
 
             BtnSearch.Visible = true;
+            TxtNume.ReadOnly = true;
+            TxtPrenume.ReadOnly = true;
+            TxtSuma.ReadOnly = true;
 
             LblClient.ForeColor = Color.Black;
             LblCodPersonal.ForeColor = Color.Black;
@@ -167,7 +186,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSaveNume_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathClientiTxt);
+            string[] lines = File.ReadAllLines(Client.FilePath);
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -193,7 +212,7 @@ namespace Magazin_UI.Forms
                 }
             }
 
-            File.WriteAllLines(filePathClientiTxt, lines);
+            File.WriteAllLines(Client.FilePath, lines);
 
             TxtNume.ReadOnly = true;
 
@@ -209,7 +228,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSavePrenume_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathClientiTxt);
+            string[] lines = File.ReadAllLines(Client.FilePath);
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -236,7 +255,7 @@ namespace Magazin_UI.Forms
                 }
             }
 
-            File.WriteAllLines(filePathClientiTxt, lines);
+            File.WriteAllLines(Client.FilePath, lines);
 
             TxtPrenume.ReadOnly = true;
 
@@ -254,7 +273,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSaveSuma_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathClientiTxt);
+            string[] lines = File.ReadAllLines(Client.FilePath);
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -281,7 +300,7 @@ namespace Magazin_UI.Forms
                 }
             }
 
-            File.WriteAllLines(filePathClientiTxt, lines);
+            File.WriteAllLines(Client.FilePath, lines);
 
             TxtSuma.ReadOnly = true;
 
@@ -296,34 +315,14 @@ namespace Magazin_UI.Forms
             BtnCalc.Visible = false;
         }
 
-        private void FormEditareClient_Load(object sender, EventArgs e)
-        {
-            BtnEditNume.Visible = false;
-            BtnEditPrenume.Visible = false;
-            BtnEditSuma.Visible = false;
-            BtnSaveNume.Visible = false;
-            BtnSavePrenume.Visible = false;
-            BtnSaveSuma.Visible = false;
-            BtnClear.Visible = false;
-            BtnCalc.Visible = false;
-
-            foreach (Control control in Controls)
-            {
-                if (control is TextBox textBox)
-                {
-                    textBox.KeyDown += (s, ea) =>
-                    {
-                        if (ea.KeyCode != Keys.Enter) return;
-                        ea.SuppressKeyPress = true;
-                        SelectNextControl(ActiveControl, true, true, true, true);
-                    };
-                }
-            }
-        }
-
         private void LblText_Click(object sender, EventArgs e)
         {
             LblText.Text = null;
+        }
+
+        private void BtnCalc_Click(object sender, EventArgs e)
+        {
+            Process.Start("calc.exe");
         }
 
         private void TxtCodPersonal_TextChanged(object sender, EventArgs e)
@@ -333,6 +332,9 @@ namespace Magazin_UI.Forms
             TxtSuma.Text = null;
 
             BtnSearch.Visible = true;
+            TxtNume.ReadOnly = true;
+            TxtPrenume.ReadOnly = true;
+            TxtSuma.ReadOnly = true;
 
             BtnClear.Visible = false;
             BtnEditNume.Visible = false;
@@ -342,11 +344,6 @@ namespace Magazin_UI.Forms
             BtnEditPrenume.Visible = false;
             BtnEditSuma.Visible = false;
             BtnCalc.Visible = false;
-        }
-
-        private void BtnCalc_Click(object sender, EventArgs e)
-        {
-            Process.Start("calc.exe");
         }
     }
 }

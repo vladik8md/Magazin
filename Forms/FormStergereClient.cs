@@ -1,23 +1,15 @@
 ﻿using System;
+using Magazin;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Magazin_UI.Forms
 {
     public partial class FormStergereClient : Form
     {
-        private const string folderPathClienti = "../../../";
-        private const string fileNameClienti = "Clienti.txt";
-        private string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -30,11 +22,6 @@ namespace Magazin_UI.Forms
             this.Controls.Add(childForm);
             childForm.BringToFront();
             childForm.Show();
-        }
-
-        public FormStergereClient()
-        {
-            InitializeComponent();
         }
 
         private void FormStergeClient_Load(object sender, EventArgs e)
@@ -56,6 +43,11 @@ namespace Magazin_UI.Forms
                     };
                 }
             }
+        }
+
+        public FormStergereClient()
+        {
+            InitializeComponent();
         }
 
         private void BtnExit_Click(object sender, EventArgs e)
@@ -110,7 +102,7 @@ namespace Magazin_UI.Forms
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathClientiTxt);
+            string[] lines = File.ReadAllLines(Client.FilePath);
             foreach (string line in lines)
             {
                 string[] values = line.Split(',');
@@ -147,25 +139,9 @@ namespace Magazin_UI.Forms
             }
         }
 
-        private void TxtCodPersonal_TextChanged(object sender, EventArgs e)
-        {
-            TxtNume.Text = null;
-            TxtPrenume.Text = null;
-            TxtSuma.Text = null;
-
-            BtnSearch.Visible = true;
-
-            BtnClear.Visible = false;
-            BtnNu.Visible = false;
-            BtnDa.Visible = false;
-            BtnSterge.Visible = false;
-
-            LblConfirmareText.Text = null;
-        }
-
         private void BtnSterge_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathClientiTxt);
+            string[] lines = File.ReadAllLines(Client.FilePath);
 
             List<string> deleteLines = new List<string>();
 
@@ -206,7 +182,7 @@ namespace Magazin_UI.Forms
 
         private void BtnDa_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathClientiTxt);
+            string[] lines = File.ReadAllLines(Client.FilePath);
 
             List<string> deleteLines = new List<string>();
 
@@ -220,7 +196,7 @@ namespace Magazin_UI.Forms
                 deleteLines.Add(line);
             }
 
-            File.WriteAllLines(filePathClientiTxt, deleteLines);
+            File.WriteAllLines(Client.FilePath, deleteLines);
 
             LblText.Text = $"Clientul a fost șters din 'Clienti.txt' cu codul personal '{TxtCodPersonal.Text}'";
 
@@ -241,6 +217,22 @@ namespace Magazin_UI.Forms
         private void LblText_Click(object sender, EventArgs e)
         {
             LblText.Text = null;
+        }
+
+        private void TxtCodPersonal_TextChanged(object sender, EventArgs e)
+        {
+            TxtNume.Text = null;
+            TxtPrenume.Text = null;
+            TxtSuma.Text = null;
+
+            BtnSearch.Visible = true;
+
+            BtnClear.Visible = false;
+            BtnNu.Visible = false;
+            BtnDa.Visible = false;
+            BtnSterge.Visible = false;
+
+            LblConfirmareText.Text = null;
         }
     }
 }

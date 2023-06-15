@@ -120,7 +120,6 @@
             this.Name = "FormMeniu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormMeniu";
-            this.Load += new System.EventHandler(this.FormMeniu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PbLogo)).EndInit();
             this.ResumeLayout(false);
 

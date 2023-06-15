@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using Magazin;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace Magazin_UI.Forms
 {
     public partial class FormCautareClient : Form
     {
-        private const string folderPathClienti = "../../../";
-        private const string fileNameClienti = "Clienti.txt";
-        private string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -31,6 +21,24 @@ namespace Magazin_UI.Forms
             this.Controls.Add(childForm);
             childForm.BringToFront();
             childForm.Show();
+        }
+
+        private void FormCautareClient_Load(object sender, EventArgs e)
+        {
+            BtnClear.Visible = false;
+
+            foreach (Control control in Controls)
+            {
+                if (control is TextBox textBox)
+                {
+                    textBox.KeyDown += (s, ea) =>
+                    {
+                        if (ea.KeyCode != Keys.Enter) return;
+                        ea.SuppressKeyPress = true;
+                        SelectNextControl(ActiveControl, true, true, true, true);
+                    };
+                }
+            }
         }
 
         public FormCautareClient()
@@ -68,27 +76,10 @@ namespace Magazin_UI.Forms
             }
         }
 
-        private void FormCautareClient_Load(object sender, EventArgs e)
-        {
-            BtnClear.Visible = false;
-
-            foreach (Control control in Controls)
-            {
-                if (control is TextBox textBox)
-                {
-                    textBox.KeyDown += (s, ea) =>
-                    {
-                        if (ea.KeyCode != Keys.Enter) return;
-                        ea.SuppressKeyPress = true;
-                        SelectNextControl(ActiveControl, true, true, true, true);
-                    };
-                }
-            }
-        }
-
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            string[] lines = File.ReadAllLines(filePathClientiTxt);
+            string[] lines = File.ReadAllLines(Client.FilePath);
+
             foreach (string line in lines)
             {
                 string[] values = line.Split(',');

@@ -1,25 +1,14 @@
 ﻿using Magazin;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace Magazin_UI.Forms
 {
     public partial class FormAdaugareClient : Form
     {
-        private const string folderPathClienti = "../../../";
-        private const string fileNameClienti = "Clienti.txt";
-        private string filePathClientiTxt = Path.Combine(folderPathClienti, fileNameClienti);
-
         private Form activeForm;
 
         private void OpenChildForm(Form childForm)
@@ -32,29 +21,6 @@ namespace Magazin_UI.Forms
             this.Controls.Add(childForm);
             childForm.BringToFront();
             childForm.Show();
-        }
-
-        private void ClearFields()
-        {
-            TxtCodPersonal.Text = string.Empty;
-            TxtNume.Text = string.Empty;
-            TxtPrenume.Text = string.Empty;
-            TxtSuma.Text = string.Empty;
-        }
-
-        public FormAdaugareClient()
-        {
-            InitializeComponent();
-        }
-
-        private void BtnBack_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new FormClienti());
-        }
-
-        private void BtnMeniu_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new FormMeniu());
         }
 
         private void FormAdaugareClient_Load(object sender, EventArgs e)
@@ -73,14 +39,41 @@ namespace Magazin_UI.Forms
             }
         }
 
+        public FormAdaugareClient()
+        {
+            InitializeComponent();
+        }
+
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new FormClienti());
+        }
+
+        private void BtnMeniu_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new FormMeniu());
+        }
+
         private void BtnAdaugaClient_Click(object sender, EventArgs e)
         {
+            LblText.Text = string.Empty;
+
             string clientCodPersonal = TxtCodPersonal.Text;
             string clientNume = TxtNume.Text;
             string clientPrenume = TxtPrenume.Text;
             string clientSuma = TxtSuma.Text;
 
-            if (string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && (string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out double suma)))
+            if (Client.ClientExists(clientCodPersonal, Client.FilePath))
+            {
+                LblClient.ForeColor = Color.Red;
+                LblCodPersonal.ForeColor = Color.Red;
+                LblNume.ForeColor = Color.Black;
+                LblPrenume.ForeColor = Color.Black;
+                LblSuma.ForeColor = Color.Black;
+                LblText.Text = $"Clientul cu codul personal '{clientCodPersonal}' deja există în fișierul 'Clienti.txt'";
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(clientCodPersonal) && string.IsNullOrWhiteSpace(clientNume) && string.IsNullOrWhiteSpace(clientPrenume) && (string.IsNullOrWhiteSpace(clientSuma) || !double.TryParse(clientSuma, out double suma)))
             {
                 LblClient.ForeColor = Color.Red;
                 LblCodPersonal.ForeColor = Color.Red;
@@ -206,16 +199,6 @@ namespace Magazin_UI.Forms
                 LblSuma.ForeColor = Color.Black;
                 return;
             }
-            else if (ClientExists(clientCodPersonal))
-            {
-                LblClient.ForeColor = Color.Red;
-                LblCodPersonal.ForeColor = Color.Red;
-                LblNume.ForeColor = Color.Black;
-                LblPrenume.ForeColor = Color.Black;
-                LblSuma.ForeColor = Color.Black;
-                LblText.Text = $"Clientul cu codul personal '{clientCodPersonal}' deja există în fișierul 'Clienti.txt'";
-                return;
-            }
             else
             {
                 LblClient.ForeColor = Color.Black;
@@ -227,34 +210,14 @@ namespace Magazin_UI.Forms
 
             Client client = new Client(clientCodPersonal, clientNume, clientPrenume, double.Parse(TxtSuma.Text));
 
-            using (StreamWriter writer = File.AppendText(filePathClientiTxt))
+            using (StreamWriter writer = File.AppendText(Client.FilePath))
             {
                 writer.WriteLine(client);
             }
 
             LblText.Text = $"Produsul a fost salvat în 'Clienti.txt' cu codul personal '{clientCodPersonal}'";
-            ClearFields();
-        }
 
-        private bool ClientExists(string clientCodPersonal)
-        {
-            if (File.Exists(filePathClientiTxt))
-            {
-                using (StreamReader reader = new StreamReader(filePathClientiTxt))
-                {
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string[] values = line.Split(',');
-                        if (values.Length >= 1 && values[0] == clientCodPersonal)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
+            Client.ClearFields(TxtCodPersonal, TxtNume, TxtPrenume, TxtSuma);
         }
 
         private void LblText_Click(object sender, EventArgs e)
